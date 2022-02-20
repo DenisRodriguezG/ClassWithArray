@@ -79,12 +79,15 @@ namespace ClassWithArray
             string aux = "";
             for(int i = 0; i < counter; i++)
             {
-                if (i == 0)
+                if (i == 0 && i == (counter - 1))
+                    aux += Element[i] + " <--- Beggining <-- End";
+                else if (i == 0)
                     aux += Element[i] + " <--- Beggining\n";
-                else if (i == (counter - 1))
-                    aux += Element[i] + " <--- End";
-                else
+                else if (i > 0 && i < (counter - 1))
                     aux += Element[i] + "\n";
+                else
+                if (i == (counter - 1))
+                    aux += Element[i] + " <--- End";
             }
             return aux;
         }
@@ -183,12 +186,10 @@ namespace ClassWithArray
             return false;
         }
         public static bool operator !=(cArray Op1, cArray Op2)
-        {
-            if (Op1.Empty() != Op2.Empty())
-                return true;
-            if (Op1.counter != Op2.counter)
-                return true;
-            return false;
+        {   
+            if (Op1 == Op2)
+                return false;
+            return true;
         }
         public static cArray operator +(cArray Op1, cArray Op2)
         {
@@ -203,6 +204,7 @@ namespace ClassWithArray
                 {
                     Op3.Element[Op3.counter] = Op1.Element[i];
                     Op3.counter++;
+                    continue;
                 }  
                 if(i < Op2.counter)
                 {
@@ -215,6 +217,46 @@ namespace ClassWithArray
             for (int i = 0; i < Op2.counter; i++)
                 Op3.Element[Op3.counter++] = Op2.Element[i];
             return Op3;
+        }
+        public static cArray operator -(cArray Op1, cArray Op2)
+        {
+            int maxElements = Op1.max + Op2.max;
+            cArray A3 = new cArray(maxElements);
+            
+            if (Op1.Empty() && Op2.Empty())
+                return A3;
+            if(Op1.counter > Op2.counter)
+             {
+                 for(int i = 0; i < Op1.counter; i++)
+                 {
+                     if(i <= (Op2.counter - 1))
+                     {
+                         A3.Element[A3.counter++] = Op1.Element[i] - Op2.Element[i];
+                         continue;
+
+                     }
+
+                     A3.Element[A3.counter++] = Op1.Element[i];
+                 }
+             }
+            if (Op2.counter > Op1.counter)
+            {
+                for (int i = 0; i < Op2.counter; i++)
+                {
+                    if (i <= (Op1.counter - 1))
+                    {
+                        A3.Element[A3.counter++] = Op1.Element[i] - Op2.Element[i];
+                        continue;
+
+                    }
+
+                    A3.Element[A3.counter++] = Op2.Element[i];
+
+
+                }
+            }
+
+            return A3;
         }
         public void numbersPrimos()
         {
@@ -233,6 +275,14 @@ namespace ClassWithArray
             }    
             
         }
+        public void numbersPares()
+        {
+            for(int i = 0; i < counter; i++)
+            {
+                if (Element[i] % 2 == 0)
+                    Console.WriteLine("Casilla [" + i + "] = " + Element[i] + " is par");
+            }
+        }
         public void menu()
         {
             int option;
@@ -249,7 +299,8 @@ namespace ClassWithArray
                 Console.WriteLine("3.- Show all of the array or element");
                 Console.WriteLine("4.- Information of the array");
                 Console.WriteLine("5.- Know the numbers primos");
-                Console.WriteLine("6.- Exit");
+                Console.WriteLine("6.- Know the number pares");
+                Console.WriteLine("7.- Exit");
                 Console.WriteLine("");
                 Console.Write("Choose one of the otions: ");
                 option = int.Parse(Console.ReadLine());
@@ -288,11 +339,18 @@ namespace ClassWithArray
                         numbersPrimos();
                         break;
                     case 6:
+                        Console.WriteLine("6.- The numbers pares");
+                        if (Empty())
+                            Console.WriteLine("Array is empty");
+                        else
+                            numbersPares();
+                        break;
+                    case 7:
                         Console.WriteLine("Thank you for visit");
                         break;
                 }
             }
-            while (option != 6);
+            while (option != 7);
 
 
         }

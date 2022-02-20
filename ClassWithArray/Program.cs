@@ -7,6 +7,6 @@ A1.menu();
 A2.menu();
 
 
-Console.WriteLine(A1.Equals(A2));
-A3 = A1 + A2;
+Console.WriteLine(A1 != A2);
+A3 = A1 - A2;
 A3.menu();
