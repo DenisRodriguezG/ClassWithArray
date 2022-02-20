@@ -184,11 +184,9 @@ namespace ClassWithArray
         }
         public static bool operator !=(cArray Op1, cArray Op2)
         {
-            if (Op1.Empty() != Op2.Empty())
-                return true;
-            if (Op1.counter != Op2.counter)
-                return true;
-            return false;
+            if (Op1 == Op2)
+                return false;
+            return true;
         }
         public static cArray operator +(cArray Op1, cArray Op2)
         {
