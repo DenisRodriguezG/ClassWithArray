@@ -190,6 +190,8 @@ namespace ClassWithArray
             if (Op1 == Op2)
                 return false;
             return true;
+                return true;
+            return false;
         }
         public static cArray operator +(cArray Op1, cArray Op2)
         {
